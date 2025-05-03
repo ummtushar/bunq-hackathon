@@ -1,0 +1,146 @@
+{
+    "Response": [
+      {
+        "Payment": {
+          "id": 25276922,
+          "created": "2025-05-03 10:23:50.000000",
+          "updated": "2025-05-03 10:23:50.000000",
+          "monetary_account_id": 2107283,
+          "amount": {
+            "currency": "EUR",
+            "value": "20.00"
+          },
+          "payment_fee": null,
+          "description": "NS train ticket",
+          "type": "BUNQ",
+          "merchant_reference": null,
+          "alias": {
+            "iban": "NL91BUNQ1234567890",
+            "is_light": false,
+            "display_name": "J. Doe",
+            "avatar": {
+              "uuid": "123e4567-e89b-12d3-a456-426614174000",
+              "image": [
+                {
+                  "attachment_public_uuid": "abc12345-6789-0abc-def1-234567890abc",
+                  "height": 1024,
+                  "width": 1024,
+                  "content_type": "image/png",
+                  "urls": [
+                    {
+                      "type": "ORIGINAL",
+                      "url": "https://example.com/avatar/jdoe.png"
+                    }
+                  ]
+                }
+              ],
+              "anchor_uuid": null,
+              "style": "NONE"
+            },
+            "label_user": {
+              "uuid": "123e4567-e89b-12d3-a456-426614174001",
+              "display_name": "J. Doe",
+              "country": "NL",
+              "avatar": {
+                "uuid": "123e4567-e89b-12d3-a456-426614174002",
+                "image": [
+                  {
+                    "attachment_public_uuid": "def67890-1234-5def-6789-0123456789de",
+                    "height": 200,
+                    "width": 200,
+                    "content_type": "image/jpeg",
+                    "urls": [
+                      {
+                        "type": "ORIGINAL",
+                        "url": "https://example.com/avatar/jdoe_label.jpg"
+                      }
+                    ]
+                  }
+                ],
+                "anchor_uuid": "123e4567-e89b-12d3-a456-426614174001",
+                "style": "NONE"
+              },
+              "public_nick_name": "JDoe",
+              "type": "PERSON"
+            },
+            "country": "NL"
+          },
+          "counterparty_alias": {
+            "iban": "NL32BUNQ0987654321",
+            "is_light": false,
+            "display_name": "NS",
+            "avatar": {
+              "uuid": "123e4567-e89b-12d3-a456-426614174003",
+              "image": [
+                {
+                  "attachment_public_uuid": "ghi90123-4567-8ghi-9012-3456789012gh",
+                  "height": 1024,
+                  "width": 1024,
+                  "content_type": "image/png",
+                  "urls": [
+                    {
+                      "type": "ORIGINAL",
+                      "url": "https://example.com/avatar/ns.png"
+                    }
+                  ]
+                }
+              ],
+              "anchor_uuid": null,
+              "style": "NONE"
+            },
+            "label_user": {
+              "uuid": "123e4567-e89b-12d3-a456-426614174004",
+              "display_name": "NS",
+              "country": "NL",
+              "avatar": {
+                "uuid": "123e4567-e89b-12d3-a456-426614174005",
+                "image": [
+                  {
+                    "attachment_public_uuid": "jkl34567-8901-2jkl-3456-7890123456jk",
+                    "height": 200,
+                    "width": 200,
+                    "content_type": "image/jpeg",
+                    "urls": [
+                      {
+                        "type": "ORIGINAL",
+                        "url": "https://example.com/avatar/ns_label.jpg"
+                      }
+                    ]
+                  }
+                ],
+                "anchor_uuid": "123e4567-e89b-12d3-a456-426614174004",
+                "style": "NONE"
+              },
+              "public_nick_name": "NS",
+              "type": "ORGANIZATION"
+            },
+            "country": "NL"
+          },
+          "attachment": [],
+          "geolocation": null,
+          "batch_id": null,
+          "scheduled_id": null,
+          "address_billing": null,
+          "address_shipping": null,
+          "sub_type": "PAYMENT",
+          "payment_arrival_expected": {
+            "status": "ARRIVED",
+            "time": null
+          },
+          "request_reference_split_the_bill": [],
+          "balance_after_mutation": {
+            "currency": "EUR",
+            "value": "0.00"
+          },
+          "payment_auto_allocate_instance": null,
+          "payment_suspended_outgoing": null
+        }
+      }
+    ],
+    "Pagination": {
+      "future_url": null,
+      "newer_url": null,
+      "older_url": null
+    }
+  }
+  

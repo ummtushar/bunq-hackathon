@@ -1,0 +1,308 @@
+{
+  "transactions": [
+    {
+      "transaction_id": "25276922",
+      "date": "2025-05-03 10:23:50.000000",
+      "amount": 20.0,
+      "currency": "EUR",
+      "description": "NS train ticket",
+      "merchant": "NS",
+      "category": "Travel",
+      "type": "BUNQ",
+      "sub_type": "PAYMENT",
+      "previous_transactions": []
+    },
+    {
+      "transaction_id": "25276923",
+      "date": "2025-05-03 10:25:28.000000",
+      "amount": 30.0,
+      "currency": "EUR",
+      "description": "Zara T-shirt purchase",
+      "merchant": "Zara Amsterdam",
+      "category": "Clothing",
+      "type": "BUNQ",
+      "sub_type": "PAYMENT",
+      "previous_transactions": []
+    },
+    {
+      "transaction_id": "25276921",
+      "date": "2025-05-03 10:22:17.000000",
+      "amount": 5.0,
+      "currency": "EUR",
+      "description": "SPAR coffee",
+      "merchant": "SPAR Amsterdam",
+      "category": "Food and Drink",
+      "type": "BUNQ",
+      "sub_type": "PAYMENT",
+      "previous_transactions": [
+        {
+          "merchant": "SPAR Amsterdam",
+          "amount": 3.0,
+          "date": "2025-05-03 10:18:40.000000"
+        },
+        {
+          "merchant": "SPAR Amsterdam",
+          "amount": 3.0,
+          "date": "2025-05-03 09:45:00.000000"
+        }
+      ]
+    },
+    {
+      "transaction_id": "25276919",
+      "date": "2025-05-03 10:18:40.000000",
+      "amount": 3.0,
+      "currency": "EUR",
+      "description": "money for coffee SPAR",
+      "merchant": "SPAR Amsterdam",
+      "category": "Food and Drink",
+      "type": "BANK_TRANSFER",
+      "sub_type": "PAYMENT",
+      "previous_transactions": [
+        {
+          "merchant": "SPAR Amsterdam",
+          "amount": 5.0,
+          "date": "2025-05-03 10:22:17.000000"
+        }
+      ]
+    },
+    {
+      "transaction_id": "25276919",
+      "date": "2025-05-03 09:45:00.000000",
+      "amount": 3.0,
+      "currency": "EUR",
+      "description": "Coffee at SPAR",
+      "merchant": "SPAR Amsterdam",
+      "category": "Food and Drink",
+      "type": "BUNQ",
+      "sub_type": "PAYMENT",
+      "previous_transactions": [
+        {
+          "merchant": "SPAR Amsterdam",
+          "amount": 5.0,
+          "date": "2025-05-03 10:22:17.000000"
+        }
+      ]
+    },
+    {
+      "transaction_id": "25276917",
+      "date": "2025-05-02 11:44:43.043140",
+      "amount": 4.0,
+      "currency": "EUR",
+      "description": "4 nuggets kkkkk",
+      "merchant": "S. Daddy",
+      "category": "Food and Drink",
+      "type": "BUNQ",
+      "sub_type": "REQUEST",
+      "previous_transactions": []
+    },
+    {
+      "transaction_id": "25276920",
+      "date": "2025-05-03 10:20:45.000000",
+      "amount": 10.0,
+      "currency": "EUR",
+      "description": "McDonald's meal",
+      "merchant": "McDonald's Amsterdam",
+      "category": "Food and Drink",
+      "type": "BUNQ",
+      "sub_type": "PAYMENT",
+      "previous_transactions": []
+    }
+  ],
+  "merchant_analysis": {
+    "NS": {
+      "total_spent": 20.0,
+      "transaction_count": 1,
+      "transactions": [
+        {
+          "transaction_id": "25276922",
+          "date": "2025-05-03 10:23:50.000000",
+          "amount": 20.0,
+          "currency": "EUR",
+          "description": "NS train ticket",
+          "merchant": "NS",
+          "category": "Travel",
+          "type": "BUNQ",
+          "sub_type": "PAYMENT"
+        }
+      ]
+    },
+    "Zara Amsterdam": {
+      "total_spent": 30.0,
+      "transaction_count": 1,
+      "transactions": [
+        {
+          "transaction_id": "25276923",
+          "date": "2025-05-03 10:25:28.000000",
+          "amount": 30.0,
+          "currency": "EUR",
+          "description": "Zara T-shirt purchase",
+          "merchant": "Zara Amsterdam",
+          "category": "Clothing",
+          "type": "BUNQ",
+          "sub_type": "PAYMENT"
+        }
+      ]
+    },
+    "SPAR Amsterdam": {
+      "total_spent": 11.0,
+      "transaction_count": 3,
+      "transactions": [
+        {
+          "transaction_id": "25276921",
+          "date": "2025-05-03 10:22:17.000000",
+          "amount": 5.0,
+          "currency": "EUR",
+          "description": "SPAR coffee",
+          "merchant": "SPAR Amsterdam",
+          "category": "Food and Drink",
+          "type": "BUNQ",
+          "sub_type": "PAYMENT"
+        },
+        {
+          "transaction_id": "25276919",
+          "date": "2025-05-03 10:18:40.000000",
+          "amount": 3.0,
+          "currency": "EUR",
+          "description": "money for coffee SPAR",
+          "merchant": "SPAR Amsterdam",
+          "category": "Food and Drink",
+          "type": "BANK_TRANSFER",
+          "sub_type": "PAYMENT"
+        },
+        {
+          "transaction_id": "25276919",
+          "date": "2025-05-03 09:45:00.000000",
+          "amount": 3.0,
+          "currency": "EUR",
+          "description": "Coffee at SPAR",
+          "merchant": "SPAR Amsterdam",
+          "category": "Food and Drink",
+          "type": "BUNQ",
+          "sub_type": "PAYMENT"
+        }
+      ]
+    },
+    "S. Daddy": {
+      "total_spent": 4.0,
+      "transaction_count": 1,
+      "transactions": [
+        {
+          "transaction_id": "25276917",
+          "date": "2025-05-02 11:44:43.043140",
+          "amount": 4.0,
+          "currency": "EUR",
+          "description": "4 nuggets kkkkk",
+          "merchant": "S. Daddy",
+          "category": "Food and Drink",
+          "type": "BUNQ",
+          "sub_type": "REQUEST"
+        }
+      ]
+    },
+    "McDonald's Amsterdam": {
+      "total_spent": 10.0,
+      "transaction_count": 1,
+      "transactions": [
+        {
+          "transaction_id": "25276920",
+          "date": "2025-05-03 10:20:45.000000",
+          "amount": 10.0,
+          "currency": "EUR",
+          "description": "McDonald's meal",
+          "merchant": "McDonald's Amsterdam",
+          "category": "Food and Drink",
+          "type": "BUNQ",
+          "sub_type": "PAYMENT"
+        }
+      ]
+    }
+  },
+  "classification": {
+    "transactions": [
+      {
+        "brand": "NS",
+        "product_category": "transport",
+        "is_subscription": false,
+        "frequency": "one-time",
+        "transaction_type": "vendor"
+      },
+      {
+        "brand": "Zara",
+        "product_category": "clothing",
+        "is_subscription": false,
+        "frequency": "one-time",
+        "transaction_type": "vendor"
+      },
+      {
+        "brand": "SPAR",
+        "product_category": "food and drink",
+        "is_subscription": false,
+        "frequency": "one-time",
+        "transaction_type": "vendor"
+      },
+      {
+        "brand": "SPAR",
+        "product_category": "food and drink",
+        "is_subscription": false,
+        "frequency": "one-time",
+        "transaction_type": "vendor"
+      },
+      {
+        "brand": "SPAR",
+        "product_category": "food and drink",
+        "is_subscription": false,
+        "frequency": "one-time",
+        "transaction_type": "vendor"
+      },
+      {
+        "brand": "S. Daddy",
+        "product_category": "food and drink",
+        "is_subscription": false,
+        "frequency": "one-time",
+        "transaction_type": "peer_to_peer"
+      },
+      {
+        "brand": "McDonald's",
+        "product_category": "food and drink",
+        "is_subscription": false,
+        "frequency": "one-time",
+        "transaction_type": "vendor"
+      }
+    ]
+  },
+  "pattern_analysis": {
+    "patterns_detected": [
+      {
+        "description": "Frequent small purchases at SPAR Amsterdam (3 transactions within 1 hour, amounts: 3.0, 3.0, 5.0 EUR)",
+        "frequency": "multiple times per day",
+        "importance": "high"
+      },
+      {
+        "description": "Regular spending on food and drink, including McDonald's and peer-to-peer food payments",
+        "frequency": "daily",
+        "importance": "medium"
+      },
+      {
+        "description": "One-time higher value purchases at NS (travel) and Zara (clothing)",
+        "frequency": "one-time",
+        "importance": "low"
+      }
+    ],
+    "potential_savings": {
+      "Food and Drink": 5.0,
+      "Clothing": 30.0
+    },
+    "outliers": [
+      {
+        "description": "Zara T-shirt purchase is significantly higher than other transactions",
+        "amount": 30.0
+      },
+      {
+        "description": "NS train ticket is a one-time, higher-than-average transaction",
+        "amount": 20.0
+      }
+    ]
+  },
+  "research": "It looks like there was a technical issue with the search tools. However, I can still provide concise money-saving strategies and common alternatives for each transaction based on best practices and typical options in the Netherlands:\n\n1. NS Train Ticket (\u20ac20)\n   - Consider off-peak travel, group tickets, or NS Flex subscriptions for discounts.\n   - Check for regional travel cards or discount codes.\n   - Use apps like \u201c9292\u201d or \u201cNS\u201d to compare ticket options.\n\n2. Zara T-shirt (\u20ac30)\n   - Look for similar styles at budget retailers like H&M, Primark, or C&A.\n   - Check online marketplaces (Vinted, Marktplaats) for second-hand or new T-shirts at lower prices.\n   - Wait for Zara sales or use student discounts if available.\n\n3. SPAR Coffee (\u20ac3\u20135 per cup, multiple times daily)\n   - Buy coffee at larger chains (e.g., Albert Heijn To Go, HEMA) which often offer cheaper prices.\n   - Invest in a reusable cup and make coffee at home or work\u2014significant savings over time.\n   - Look for loyalty programs or multi-buy deals at local cafes.\n\n4. McDonald\u2019s Meal (\u20ac10)\n   - Check for McDonald\u2019s app deals or meal combos.\n   - Try other fast food chains (e.g., Febo, KFC) for cheaper meal deals.\n   - Prepare similar meals at home for a fraction of the cost.\n\n5. Chicken Nuggets (Peer-to-peer, \u20ac4)\n   - Store-bought frozen nuggets from supermarkets (Jumbo, Albert Heijn) are much cheaper per portion.\n   - Buy in bulk and prepare at home for better value.\n\nSummary of Money-Saving Strategies:\n- Use discount cards, apps, and group deals for travel.\n- Shop at budget or second-hand clothing stores.\n- Make coffee and fast food at home, or seek out loyalty programs and promotions.\n- Reduce frequency of small daily purchases for significant long-term savings.\n\nIf you want specific current deals or promotions, let me know and I can try searching again!",
+  "recommendation": "Make coffee at home, buy clothes on sale, and check travel discounts.\n\nYou can save a lot by preparing your own coffee instead of buying it multiple times a day\u2014try making it at home or work and bringing a reusable cup. For clothing, look for sales or shop at budget stores and second-hand platforms. For travel, check for off-peak or group ticket discounts before buying. Small changes in these areas can add up to big savings!"
+}

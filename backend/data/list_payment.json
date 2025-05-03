@@ -1,0 +1,145 @@
+{
+    "Response": [
+        {
+            "Payment": {
+                "id": 25276917,
+                "created": "2025-05-02 11:44:43.043140",
+                "updated": "2025-05-02 11:44:43.043140",
+                "monetary_account_id": 2107283,
+                "amount": {
+                    "currency": "EUR",
+                    "value": "4.00"
+                },
+                "payment_fee": null,
+                "description": "4 nuggets kkkkk",
+                "type": "BUNQ",
+                "merchant_reference": null,
+                "alias": {
+                    "iban": "NL91BUNQ2090609648",
+                    "is_light": false,
+                    "display_name": "M. Davenport",
+                    "avatar": {
+                        "uuid": "833b918e-0418-4be6-8c6b-aa50e83f7b51",
+                        "image": [
+                            {
+                                "attachment_public_uuid": "45f34c3c-8a66-4282-9e26-ca86a25c304d",
+                                "height": 1023,
+                                "width": 1024,
+                                "content_type": "image/png",
+                                "urls": [
+                                    {
+                                        "type": "ORIGINAL",
+                                        "url": "https://bunq-triage-model-storage-public.s3.eu-central-1.amazonaws.com/bunq_file/File/content/921ece497cd00f4e0cef3f0f63a962c31cf3f8e35311d127d5a7b23be3d074d5.png"
+                                    }
+                                ]
+                            }
+                        ],
+                        "anchor_uuid": null,
+                        "style": "NONE"
+                    },
+                    "label_user": {
+                        "uuid": "d149446b-0292-46e2-9e0b-21c21c13965e",
+                        "display_name": "M. Davenport",
+                        "country": "NL",
+                        "avatar": {
+                            "uuid": "9debf55b-70b1-4d43-8d51-d6e7bd42fb5b",
+                            "image": [
+                                {
+                                    "attachment_public_uuid": "4b7e0d1d-9167-48ac-990a-70e342c87812",
+                                    "height": 126,
+                                    "width": 200,
+                                    "content_type": "image/jpeg",
+                                    "urls": [
+                                        {
+                                            "type": "ORIGINAL",
+                                            "url": "https://bunq-triage-model-storage-public.s3.eu-central-1.amazonaws.com/bunq_file/File/content/6979a145b7ea9ecc3459358122cb560608f02d36d4b8cd6b770f50e36aa35512.jpg"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "anchor_uuid": "d149446b-0292-46e2-9e0b-21c21c13965e",
+                            "style": "NONE"
+                        },
+                        "public_nick_name": "Mona",
+                        "type": "PERSON"
+                    },
+                    "country": "NL"
+                },
+                "counterparty_alias": {
+                    "iban": "NL32BUNQ2025313705",
+                    "is_light": false,
+                    "display_name": "S. Daddy",
+                    "avatar": {
+                        "uuid": "3fada745-8305-45ab-b8c2-09cc05a51b65",
+                        "image": [
+                            {
+                                "attachment_public_uuid": "23f17b08-9ece-4c05-8dd8-4caf2b6ef549",
+                                "height": 1023,
+                                "width": 1024,
+                                "content_type": "image/png",
+                                "urls": [
+                                    {
+                                        "type": "ORIGINAL",
+                                        "url": "https://bunq-triage-model-storage-public.s3.eu-central-1.amazonaws.com/bunq_file/File/content/a3fa4840d155cc0f474258d10eb307f5c673eecf7f6d596a56e71c625cbd8cee.png"
+                                    }
+                                ]
+                            }
+                        ],
+                        "anchor_uuid": null,
+                        "style": "NONE"
+                    },
+                    "label_user": {
+                        "uuid": "297f4374-38c5-4611-9708-71297ab56a4b",
+                        "display_name": "Sugar Daddy",
+                        "country": "NL",
+                        "avatar": {
+                            "uuid": "2971760d-ee2d-4bfb-9ea0-22cafefe85c3",
+                            "image": [
+                                {
+                                    "attachment_public_uuid": "060a6f77-773f-4501-a071-f8b8093b9c72",
+                                    "height": 480,
+                                    "width": 480,
+                                    "content_type": "image/jpeg",
+                                    "urls": [
+                                        {
+                                            "type": "ORIGINAL",
+                                            "url": "https://bunq-triage-model-storage-public.s3.eu-central-1.amazonaws.com/bunq_file/File/content/e68628d7e39aa9f764999abfd8fc9c0ed2667560ca05f56b5bff6e4a30e7e80c.jpg"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "anchor_uuid": "297f4374-38c5-4611-9708-71297ab56a4b",
+                            "style": "NONE"
+                        },
+                        "public_nick_name": "Sugar Daddy",
+                        "type": "PERSON"
+                    },
+                    "country": "NL"
+                },
+                "attachment": [],
+                "geolocation": null,
+                "batch_id": null,
+                "scheduled_id": null,
+                "address_billing": null,
+                "address_shipping": null,
+                "sub_type": "REQUEST",
+                "payment_arrival_expected": {
+                    "status": "ARRIVED",
+                    "time": null
+                },
+                "request_reference_split_the_bill": [],
+                "balance_after_mutation": {
+                    "currency": "EUR",
+                    "value": "4.00"
+                },
+                "payment_auto_allocate_instance": null,
+                "payment_suspended_outgoing": null
+            }
+        }
+    ],
+    "Pagination": {
+        "future_url": "/v1/user/1879990/monetary-account/2107283/payment?newer_id=25276917",
+        "newer_url": null,
+        "older_url": null
+    }
+}
