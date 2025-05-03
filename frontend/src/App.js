@@ -10,6 +10,8 @@ function App() {
   const [receiptData, setReceiptData] = useState(null);
   const [friends, setFriends] = useState([]);
   const [assignments, setAssignments] = useState({});
+  // Track split items separately
+  const [splitItems, setSplitItems] = useState({});
   const [step, setStep] = useState(1); // 1: Upload, 2: Add Friends, 3: Match Items, 4: Summary
 
   const handleReceiptProcessed = (data) => {
@@ -46,7 +48,7 @@ function App() {
     setStep(3); // Move to Match Items step
   };
 
-  const handleItemAssigned = (itemId, friendId) => {
+  const handleItemAssigned = (itemId, friendId, isSplit = false, splitCount = 1) => {
     setAssignments(prev => {
       const newAssignments = {...prev};
 
@@ -59,23 +61,41 @@ function App() {
       return newAssignments;
     });
 
-    // Update remaining quantity
-    setReceiptData(prev => {
-      const updatedItems = prev.processedItems.map(item => {
-        if (item.id === itemId && item.remainingQuantity > 0) {
-          return {
-            ...item,
-            remainingQuantity: item.remainingQuantity - 1
-          };
-        }
-        return item;
-      });
+    // Track split items with their split counts
+    if (isSplit) {
+      setSplitItems(prev => {
+        const newSplitItems = {...prev};
 
-      return {
-        ...prev,
-        processedItems: updatedItems
-      };
-    });
+        if (!newSplitItems[itemId]) {
+          newSplitItems[itemId] = {};
+        }
+
+        // Store the split count for this item
+        newSplitItems[itemId].splitCount = splitCount;
+
+        return newSplitItems;
+      });
+    }
+
+    // Only decrement remaining quantity once for split items
+    if (!isSplit || (isSplit && splitCount === 1)) {
+      setReceiptData(prev => {
+        const updatedItems = prev.processedItems.map(item => {
+          if (item.id === itemId && item.remainingQuantity > 0) {
+            return {
+              ...item,
+              remainingQuantity: item.remainingQuantity - 1
+            };
+          }
+          return item;
+        });
+
+        return {
+          ...prev,
+          processedItems: updatedItems
+        };
+      });
+    }
   };
 
   const handleComplete = () => {
@@ -86,6 +106,7 @@ function App() {
     setReceiptData(null);
     setFriends([]);
     setAssignments({});
+    setSplitItems({});
     setStep(1);
   };
 
@@ -120,6 +141,7 @@ function App() {
               items={receiptData.processedItems}
               friends={friends}
               assignments={assignments}
+              splitItems={splitItems}
               onReset={resetApp}
             />
           )}

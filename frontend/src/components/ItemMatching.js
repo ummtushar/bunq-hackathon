@@ -2,12 +2,20 @@ import React, { useState } from 'react';
 import {
   VStack, HStack, Box, Text, Button,
   Grid, GridItem, Badge, Progress,
-  Alert, AlertIcon
+  Alert, AlertIcon, Tooltip, IconButton,
+  Modal, ModalOverlay, ModalContent,
+  ModalHeader, ModalFooter, ModalBody,
+  ModalCloseButton, useDisclosure,
+  Radio, RadioGroup, Stack, Flex
 } from '@chakra-ui/react';
+import { InfoIcon, CloseIcon } from '@chakra-ui/icons';
 
 const ItemMatching = ({ items, friends, assignments, onItemAssigned, onComplete }) => {
   const [selectedItemId, setSelectedItemId] = useState(null);
   const [error, setError] = useState(null);
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [splitOption, setSplitOption] = useState('whole');
+  const [selectedFriends, setSelectedFriends] = useState([]);
 
   // Calculate total items and how many have been fully assigned
   const totalQuantity = items.reduce((sum, item) => sum + item.quantity, 0);
@@ -20,6 +28,9 @@ const ItemMatching = ({ items, friends, assignments, onItemAssigned, onComplete 
     if (item && item.remainingQuantity > 0) {
       setSelectedItemId(itemId);
       setError(null);
+      // Reset split options when selecting a new item
+      setSplitOption('whole');
+      setSelectedFriends([]);
     }
   };
 
@@ -29,8 +40,43 @@ const ItemMatching = ({ items, friends, assignments, onItemAssigned, onComplete 
       return;
     }
 
-    // Assign the selected item to this friend
-    onItemAssigned(selectedItemId, friendId);
+    if (splitOption === 'whole') {
+      // Traditional single assignment
+      onItemAssigned(selectedItemId, friendId);
+
+      // Check if all quantities of the item have been assigned
+      const updatedItem = items.find(i => i.id === selectedItemId);
+      if (updatedItem.remainingQuantity - 1 <= 0) {
+        setSelectedItemId(null); // Reset selection if no remaining quantity
+      }
+    } else {
+      // For split items, we open the modal to select multiple friends
+      onOpen();
+      setSelectedFriends([friendId]); // Start with the clicked friend
+    }
+  };
+
+  const toggleFriendSelection = (friendId) => {
+    if (selectedFriends.includes(friendId)) {
+      setSelectedFriends(selectedFriends.filter(id => id !== friendId));
+    } else {
+      setSelectedFriends([...selectedFriends, friendId]);
+    }
+  };
+
+  const handleSplitConfirm = () => {
+    if (selectedFriends.length === 0) {
+      return; // Don't do anything if no friends selected
+    }
+
+    // For each selected friend, assign the item with a split indicator
+    selectedFriends.forEach(friendId => {
+      onItemAssigned(selectedItemId, friendId, true, selectedFriends.length);
+    });
+
+    // Close modal and reset
+    onClose();
+    setSelectedFriends([]);
 
     // Check if all quantities of the item have been assigned
     const updatedItem = items.find(i => i.id === selectedItemId);
@@ -77,6 +123,21 @@ const ItemMatching = ({ items, friends, assignments, onItemAssigned, onComplete 
           <AlertIcon />
           {error}
         </Alert>
+      )}
+
+      {selectedItemId && (
+        <HStack width="100%" spacing={4}>
+          <Text>Assign as:</Text>
+          <RadioGroup onChange={setSplitOption} value={splitOption}>
+            <Stack direction="row">
+              <Radio value="whole">Whole item</Radio>
+              <Radio value="split">Split item</Radio>
+            </Stack>
+          </RadioGroup>
+          <Tooltip label="Use 'Split item' when multiple people share one item">
+            <InfoIcon />
+          </Tooltip>
+        </HStack>
       )}
 
       <Grid templateColumns="1fr 1fr" gap={6} width="100%">
@@ -158,6 +219,60 @@ const ItemMatching = ({ items, friends, assignments, onItemAssigned, onComplete 
       >
         Complete Assignment
       </Button>
+
+      {/* Split Item Modal */}
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>
+            Split Item Between Friends
+          </ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <Text mb={4}>
+              Select all friends who will share this item:
+            </Text>
+            <VStack align="stretch" spacing={2}>
+              {friends.map(friend => (
+                <Flex
+                  key={friend.id}
+                  p={2}
+                  borderWidth={1}
+                  borderRadius="md"
+                  alignItems="center"
+                  borderColor={selectedFriends.includes(friend.id) ? "blue.500" : "gray.200"}
+                  bg={selectedFriends.includes(friend.id) ? "blue.50" : "white"}
+                  onClick={() => toggleFriendSelection(friend.id)}
+                  cursor="pointer"
+                  _hover={{ bg: "blue.50" }}
+                >
+                  <Text flex="1">{friend.name}</Text>
+                  {selectedFriends.includes(friend.id) && (
+                    <Badge colorScheme="blue">Selected</Badge>
+                  )}
+                </Flex>
+              ))}
+            </VStack>
+            {selectedFriends.length > 0 && (
+              <Text mt={4} fontSize="sm" color="gray.600">
+                This item will be split evenly between {selectedFriends.length} people.
+              </Text>
+            )}
+          </ModalBody>
+          <ModalFooter>
+            <Button variant="ghost" mr={3} onClick={onClose}>
+              Cancel
+            </Button>
+            <Button
+              colorScheme="blue"
+              onClick={handleSplitConfirm}
+              isDisabled={selectedFriends.length === 0}
+            >
+              Confirm Split
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </VStack>
   );
 };

@@ -2,10 +2,11 @@ import React from 'react';
 import {
   VStack, Box, Text, Button, Divider,
   Table, Thead, Tbody, Tr, Th, Td,
-  Heading, Badge
+  Heading, Badge, Tooltip
 } from '@chakra-ui/react';
+import { InfoIcon } from '@chakra-ui/icons';
 
-const Summary = ({ items, friends, assignments, onReset }) => {
+const Summary = ({ items, friends, assignments, splitItems, onReset }) => {
   // Calculate what each friend owes
   const friendTotals = {};
 
@@ -18,21 +19,36 @@ const Summary = ({ items, friends, assignments, onReset }) => {
     };
   });
 
-  // Add up items for each friend
+  // Add up items for each friend, handling split items properly
   Object.entries(assignments).forEach(([itemId, friendIds]) => {
     const item = items.find(i => i.id === itemId);
+    const isSplitItem = splitItems[itemId] !== undefined;
 
     friendIds.forEach(friendId => {
+      // Get the split count if this is a split item
+      const splitCount = isSplitItem ? splitItems[itemId].splitCount : 1;
+
+      // Calculate split price (divide price by number of people sharing)
+      const pricePerPerson = isSplitItem ? item.price / splitCount : item.price;
+
       friendTotals[friendId].items.push({
         name: item.name,
-        price: item.price
+        price: pricePerPerson,
+        originalPrice: item.price,
+        isSplit: isSplitItem,
+        splitCount: splitCount
       });
 
-      friendTotals[friendId].total += item.price;
+      friendTotals[friendId].total += pricePerPerson;
     });
   });
 
   const totalBill = items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+
+  // Format currency
+  const formatCurrency = (amount) => {
+    return `€${amount.toFixed(2)}`;
+  };
 
   return (
     <VStack spacing={6} width="100%">
@@ -45,7 +61,7 @@ const Summary = ({ items, friends, assignments, onReset }) => {
           <Tbody>
             <Tr>
               <Td fontWeight="bold">Total Bill</Td>
-              <Td isNumeric>€{totalBill.toFixed(2)}</Td>
+              <Td isNumeric>{formatCurrency(totalBill)}</Td>
             </Tr>
             <Tr>
               <Td fontWeight="bold">Number of People</Td>
@@ -62,7 +78,7 @@ const Summary = ({ items, friends, assignments, onReset }) => {
           <Box key={friend.name} mb={6}>
             <Heading size="sm" mb={2} display="flex" justifyContent="space-between">
               <span>{friend.name}</span>
-              <span>€{friend.total.toFixed(2)}</span>
+              <span>{formatCurrency(friend.total)}</span>
             </Heading>
 
             <Table variant="simple" size="sm">
@@ -75,10 +91,33 @@ const Summary = ({ items, friends, assignments, onReset }) => {
               <Tbody>
                 {friend.items.map((item, index) => (
                   <Tr key={index}>
-                    <Td>{item.name}</Td>
-                    <Td isNumeric>€{item.price.toFixed(2)}</Td>
+                    <Td>
+                      {item.name}
+                      {item.isSplit && (
+                        <Tooltip
+                          label={`Split ${formatCurrency(item.originalPrice)} between ${item.splitCount} people`}
+                          placement="top"
+                        >
+                          <Badge ml={2} colorScheme="purple">
+                            Split {item.splitCount} ways
+                          </Badge>
+                        </Tooltip>
+                      )}
+                    </Td>
+                    <Td isNumeric>
+                      {formatCurrency(item.price)}
+                      {item.isSplit && (
+                        <Text as="span" fontSize="xs" color="gray.500" ml={1}>
+                          ({formatCurrency(item.originalPrice)} ÷ {item.splitCount})
+                        </Text>
+                      )}
+                    </Td>
                   </Tr>
                 ))}
+                <Tr fontWeight="bold">
+                  <Td>Total</Td>
+                  <Td isNumeric>{formatCurrency(friend.total)}</Td>
+                </Tr>
               </Tbody>
             </Table>
           </Box>
