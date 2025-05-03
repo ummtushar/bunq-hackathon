@@ -21,7 +21,7 @@ const ReceiptUploader = ({ onReceiptProcessed }) => {
     formData.append('file', file);
 
     try {
-      const response = await axios.post('http://localhost:5000/process-receipt', formData, {
+      const response = await axios.post('http://localhost:5001/process-receipt', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
