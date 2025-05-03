@@ -21,18 +21,21 @@ const ReceiptUploader = ({ onReceiptProcessed }) => {
     formData.append('file', file);
 
     try {
+      console.log('Uploading file:', file.name);
       const response = await axios.post('http://localhost:5001/process-receipt', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
       });
 
+      console.log('Response:', response.data);
       if (response.data.success) {
         onReceiptProcessed(response.data);
       } else {
         setError('Failed to process receipt. Please try again.');
       }
     } catch (err) {
+      console.error('Error uploading file:', err);
       setError(err.response?.data?.error || 'Failed to upload receipt. Please try again.');
     } finally {
       setIsUploading(false);
@@ -45,7 +48,8 @@ const ReceiptUploader = ({ onReceiptProcessed }) => {
       'image/*': ['.jpeg', '.jpg', '.png'],
       'application/pdf': ['.pdf']
     },
-    maxFiles: 1
+    maxFiles: 1,
+    multiple: false
   });
 
   return (
