@@ -3,9 +3,12 @@ import json
 import re
 import logging
 import base64
+import tempfile
+from io import BytesIO
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from werkzeug.utils import secure_filename
+from PIL import Image  # Add Pillow for image processing
 
 # Import Mistral client based on latest package structure
 from mistralai import Mistral
@@ -18,7 +21,7 @@ app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}})
 
 UPLOAD_FOLDER = 'uploads'
-ALLOWED_EXTENSIONS = {'pdf', 'jpg', 'jpeg'}  # Removed PNG as it's not supported
+ALLOWED_EXTENSIONS = {'pdf', 'jpg', 'jpeg', 'png', 'heic'}  # Added PNG and HEIC support
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
@@ -29,6 +32,39 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 def allowed_file(filename):
     return '.' in filename and \
         filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+
+def convert_image_to_pdf(image_path):
+    """
+    Convert an image file to PDF format
+    Returns: Path to the created PDF file
+    """
+    try:
+        # Open the image
+        image = Image.open(image_path)
+
+        # Convert to RGB if needed (HEIC and PNG with alpha channel need this)
+        if image.mode != 'RGB':
+            image = image.convert('RGB')
+
+        # Create PDF filename based on original filename
+        pdf_path = os.path.splitext(image_path)[0] + '.pdf'
+
+        # Save as PDF
+        image.save(pdf_path, "PDF")
+        logger.info(f"Converted {image_path} to PDF: {pdf_path}")
+
+        return pdf_path
+    except Exception as e:
+        logger.error(f"Error converting image to PDF: {e}")
+        return None
+
+
+def is_image_file(filename):
+    """Check if the file is an image that needs conversion to PDF"""
+    image_extensions = {'jpg', 'jpeg', 'png', 'heic'}
+    return '.' in filename and \
+        filename.rsplit('.', 1)[1].lower() in image_extensions
 
 
 def parse_receipt_with_ai(client, ocr_text):
@@ -96,6 +132,10 @@ def get_file_content_type(file_path):
         return 'application/pdf'
     elif extension in ['jpg', 'jpeg']:
         return 'image/jpeg'
+    elif extension == 'png':
+        return 'image/png'
+    elif extension == 'heic':
+        return 'image/heic'
     else:
         return 'application/octet-stream'
 
@@ -144,6 +184,17 @@ def process_receipt():
         file.save(filepath)
         logger.info(f"File saved to {filepath}")
 
+        # PDF file path to be used with Mistral (could be the original or a converted one)
+        pdf_filepath = filepath
+
+        # If the file is an image, convert it to PDF first
+        if is_image_file(filename):
+            logger.info(f"Converting image {filepath} to PDF")
+            pdf_filepath = convert_image_to_pdf(filepath)
+            if not pdf_filepath:
+                logger.error("Failed to convert image to PDF")
+                return jsonify({'error': 'Failed to convert image to PDF for OCR processing'}), 500
+
         try:
             # Get Mistral API key from environment
             api_key = os.environ.get("MISTRAL_API_KEY")
@@ -158,17 +209,17 @@ def process_receipt():
             # Create client using the current Mistral client structure
             client = Mistral(api_key=api_key)
 
-            logger.info(f"Processing file: {filepath}")
+            logger.info(f"Processing file: {pdf_filepath}")
 
             # Directly upload the file to Mistral
             try:
-                with open(filepath, "rb") as f:
+                with open(pdf_filepath, "rb") as f:
                     file_content = f.read()
 
                 logger.info("Uploading file to Mistral")
                 uploaded_file = client.files.upload(
                     file={
-                        "file_name": filename,
+                        "file_name": os.path.basename(pdf_filepath),
                         "content": file_content,
                     },
                     purpose="ocr"
@@ -188,7 +239,6 @@ def process_receipt():
 
                 logger.info(f"Got signed URL: {signed_url_response.url[:50]}...")
 
-                # Process with OCR using signed URL
                 logger.info("Processing with OCR using signed URL")
                 ocr_response = client.ocr.process(
                     model="mistral-ocr-latest",
@@ -233,12 +283,12 @@ def process_receipt():
                     logger.info("Trying alternate method with data URI")
 
                     # Encode file to base64
-                    with open(filepath, "rb") as f:
+                    with open(pdf_filepath, "rb") as f:
                         file_content = f.read()
                         base64_encoded = base64.b64encode(file_content).decode('utf-8')
 
                     # Get content type
-                    content_type = get_file_content_type(filepath)
+                    content_type = get_file_content_type(pdf_filepath)
 
                     # Create data URI
                     data_uri = f"data:{content_type};base64,{base64_encoded}"
@@ -291,15 +341,20 @@ def process_receipt():
             logger.error(f"Error processing receipt: {str(e)}")
             return jsonify({'error': str(e)}), 500
         finally:
-            # Clean up the file
+            # Clean up the files
             if os.path.exists(filepath):
                 os.remove(filepath)
                 logger.info(f"Removed temporary file: {filepath}")
 
+            # If we converted to PDF, remove that file too
+            if pdf_filepath != filepath and os.path.exists(pdf_filepath):
+                os.remove(pdf_filepath)
+                logger.info(f"Removed temporary PDF file: {pdf_filepath}")
+
     logger.error(f"File type not allowed: {file.filename}")
     return jsonify({
         'success': False,
-        'error': 'File type not allowed. Please upload PDF or JPG files only.'
+        'error': 'File type not allowed. Please upload PDF, JPG, PNG, or HEIC files only.'
     })
 
 

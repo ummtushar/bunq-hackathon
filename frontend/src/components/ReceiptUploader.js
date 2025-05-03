@@ -45,7 +45,7 @@ const ReceiptUploader = ({ onReceiptProcessed }) => {
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
     accept: {
-      'image/*': ['.jpeg', '.jpg', '.png'],
+      'image/*': ['.jpeg', '.jpg', '.png', '.heic'],
       'application/pdf': ['.pdf']
     },
     maxFiles: 1,
@@ -78,6 +78,9 @@ const ReceiptUploader = ({ onReceiptProcessed }) => {
             <VStack>
               <Spinner size="xl" />
               <Text mt={4}>Processing receipt with Mistral OCR...</Text>
+              <Text fontSize="sm" color="gray.500">
+                This may take a bit longer for image files as they're being converted to PDF
+              </Text>
             </VStack>
           </Center>
         ) : (
@@ -89,7 +92,7 @@ const ReceiptUploader = ({ onReceiptProcessed }) => {
                   : "Drag & drop a receipt image or PDF here, or click to select files"}
               </Text>
               <Text fontSize="sm" color="gray.500">
-                Supported formats: JPEG, PNG, PDF
+                Supported formats: PDF, JPEG, PNG, HEIC
               </Text>
             </VStack>
           </Center>
@@ -105,6 +108,7 @@ const ReceiptUploader = ({ onReceiptProcessed }) => {
 
       <Text fontSize="sm" color="gray.500">
         Your receipt will be processed with Mistral OCR to extract items and prices.
+        Images will be automatically converted to PDF for optimal OCR results.
       </Text>
     </VStack>
   );
